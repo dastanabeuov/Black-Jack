@@ -8,7 +8,7 @@ class Player < Hand
     @name = name
     @cash = 100
     @sum = 0
-    @cards = []
+    super()
   end
 
   def take_money(sum)

@@ -1,6 +1,10 @@
 class Hand
   attr_reader :cards
 
+  def initialize
+    @cards = []
+  end
+
   def points
     @sum = 0
     @aces = []

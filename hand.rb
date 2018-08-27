@@ -1,33 +1,40 @@
 class Hand
-  attr_reader :cards
+  attr_reader :dealer, :user, :interface, :bank
 
-  def initialize
-    @cards = []
+  def initialize(dealer, user, interface, bank)
+    @dealer = dealer
+    @user =user
+    @interface = interface
+    @bank = bank
   end
 
-  def points
-    @sum = 0
-    @aces = []
-    @pictures = %i[K Q J]
-    @cards.each do |card|
-      if card.face == :A
-        @aces << card
-        @sum += 11
-      elsif @pictures.include?(card.face)
-        @sum += 10
-      else
-        @sum += card.face.to_i
-      end
+  def full_hands?
+    @dealer.cards.count == 3 && @user.cards.count == 3
+  end
+
+  def verify
+    if @user.sum > 21 || @user.sum < @dealer.sum && @dealer.sum <= 21
+      lose
+    elsif @user.sum > @dealer.sum || @dealer.sum > 21
+      win
+    else
+      draw
     end
-    check_aces
   end
 
-  def take_card(deck)
-    @cards << deck.cards.shift
+  def lose
+    @interface.defeat_report
+    @bank.get_money(@dealer)
   end
 
-  def check_aces
-    @aces.each { @sum -= 10 if @sum > 21 }
+  def win
+    @interface.victory_report
+    @bank.get_money(@user)
+  end
+
+  def draw
+    @interface.draw_report
+    @bank.split_money(@user, @dealer)
   end
 
 end

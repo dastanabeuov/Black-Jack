@@ -1,5 +1,3 @@
-require_relative 'hand.rb'
-
 class Round
 
   def initialize(user, interface)
@@ -8,6 +6,7 @@ class Round
     @dealer = Dealer.new
     @deck_for_game = Deсk.new
     @bank = Bank.new
+    @hand = Hand.new(@dealer, @user, @interface, @bank)
   end
 
   def run
@@ -30,7 +29,7 @@ class Round
   end
 
   def dealing
-    if full_hands?
+    if @hand.full_hands?
       open_cards
     else
       @interface.user_chioce
@@ -49,10 +48,6 @@ class Round
         exit
       end
     end
-  end
-
-  def full_hands?
-    @dealer.cards.count == 3 && @user.cards.count == 3
   end
 
   def dealer_turn
@@ -86,31 +81,7 @@ class Round
   def open_cards
     user_cards
     dealer_cards
-    verify
+    @hand.verify
   end
 
-  def verify
-    if @user.sum > 21 || @user.sum < @dealer.sum && @dealer.sum <= 21
-      lose
-    elsif @user.sum > @dealer.sum || @dealer.sum > 21
-      win
-    else
-      draw
-    end
-  end
-
-  def lose
-    @interface.defeat_report
-    @bank.get_money(@dealer)
-  end
-
-  def win
-    @interface.victory_report
-    @bank.get_money(@user)
-  end
-
-  def draw
-    @interface.draw_report
-    @bank.split_money(@user, @dealer)
-  end
 end

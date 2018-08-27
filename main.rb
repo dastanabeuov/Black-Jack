@@ -8,6 +8,5 @@ require_relative 'interface'
 require_relative 'hand.rb'
 
 interface = Interface.new
-
 game = MyGame.new(interface)
 game.run

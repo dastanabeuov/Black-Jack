@@ -1,40 +1,56 @@
 class Hand
-  attr_reader :dealer, :user, :interface, :bank
+  attr_reader :dealer, :user
 
-  def initialize(dealer, user, interface, bank)
+  def initialize(dealer, user)
     @dealer = dealer
     @user =user
-    @interface = interface
-    @bank = bank
   end
 
   def full_hands?
     @dealer.cards.count == 3 && @user.cards.count == 3
   end
 
-  def verify
-    if @user.sum > 21 || @user.sum < @dealer.sum && @dealer.sum <= 21
-      lose
-    elsif @user.sum > @dealer.sum || @dealer.sum > 21
-      win
-    else
-      draw
+  def points(player)
+    player.sum = 1
+    @aces = []
+    @pictures = %i[K Q J]
+    player.cards.each do |card|
+      if card.face == :A
+        @aces << card
+        player.sum += 11
+      elsif @pictures.include?(card.face)
+        player.sum += 10
+      else
+        player.sum += card.face.to_i
+      end
+    end
+    check_aces
+  end
+
+  def check_aces
+    @aces.each { @sum -= 10 if @sum > 21 }
+  end
+
+  def dealer_points_message(player)
+    puts "Dealer points: #{player.sum}"
+  end
+
+  def dealer_cards_message(player)
+    puts 'Dealer cards:'
+    player.cards.each do |card|
+      puts "#{card.face}#{card.suit}"
     end
   end
 
-  def lose
-    @interface.defeat_report
-    @bank.get_money(@dealer)
+  def user_points_message(player)
+    puts "Your points: #{player.sum}"
   end
 
-  def win
-    @interface.victory_report
-    @bank.get_money(@user)
-  end
-
-  def draw
-    @interface.draw_report
-    @bank.split_money(@user, @dealer)
+  def user_cards_message(player)
+    puts 'Your cards:'
+    player.cards.each do |card|
+      puts "#{card.face}#{card.suit}"
+    end
   end
 
 end

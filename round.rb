@@ -6,7 +6,7 @@ class Round
     @dealer = Dealer.new
     @deck_for_game = Deсk.new
     @bank = Bank.new
-    @hand = Hand.new(@dealer, @user, @interface, @bank)
+    @hand = Hand.new(@dealer, @user)
   end
 
   def run
@@ -56,15 +56,15 @@ class Round
   end
 
   def user_cards
-    @interface.user_cards_message(@user)
-    @user.points
-    @interface.user_points_message(@user)
+    @hand.user_cards_message(@user)
+    @hand.points(@user)
+    @hand.user_points_message(@user)
   end
 
   def dealer_cards
-    @interface.dealer_cards_message(@dealer)
-    @dealer.points
-    @interface.dealer_points_message(@dealer)
+    @hand.dealer_cards_message(@dealer)
+    @hand.points(@dealer)
+    @hand.dealer_points_message(@dealer)
   end
 
   def cards_for_players
@@ -81,7 +81,32 @@ class Round
   def open_cards
     user_cards
     dealer_cards
-    @hand.verify
+    verify
+  end
+
+  def verify
+    if @user.sum > 21 || @user.sum < @dealer.sum && @dealer.sum <= 21
+      lose
+    elsif @user.sum > @dealer.sum || @dealer.sum > 21
+      win
+    else
+      draw
+    end
+  end
+
+  def lose
+    @interface.defeat_report
+    @bank.get_money(@dealer)
+  end
+
+  def win
+    @interface.victory_report
+    @bank.get_money(@user)
+  end
+
+  def draw
+    @interface.draw_report
+    @bank.split_money(@user, @dealer)
   end
 
 end

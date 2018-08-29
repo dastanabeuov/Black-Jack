@@ -1,17 +1,11 @@
 class Hand
-  attr_reader :dealer, :user
 
-  def initialize(dealer, user)
-    @dealer = dealer
-    @user =user
-  end
-
-  def full_hands?
-    @dealer.cards.count == 3 && @user.cards.count == 3
+  def full_hands?(dealer, user)
+    dealer.cards.count == 3 && user.cards.count == 3
   end
 
   def points(player)
-    player.sum = 1
+    player.sum = 0
     @aces = []
     @pictures = %i[K Q J]
     player.cards.each do |card|
@@ -31,24 +25,16 @@ class Hand
     @aces.each { @sum -= 10 if @sum > 21 }
   end
 
-  def dealer_points_message(player)
-    puts "Dealer points: #{player.sum}"
-  end
-
-  def dealer_cards_message(player)
+  def dealer_cards_message(dealer)
     puts 'Dealer cards:'
-    player.cards.each do |card|
+    dealer.cards.each do |card|
       puts "#{card.face}#{card.suit}"
     end
   end
 
-  def user_points_message(player)
-    puts "Your points: #{player.sum}"
-  end
-
-  def user_cards_message(player)
+  def user_cards_message(user)
     puts 'Your cards:'
-    player.cards.each do |card|
+    user.cards.each do |card|
       puts "#{card.face}#{card.suit}"
     end
   end

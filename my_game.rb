@@ -3,6 +3,7 @@ require_relative 'round'
 class MyGame
   def initialize(interface)
     @interface = interface
+    @hand = Hand.new
   end
 
   def run
@@ -17,7 +18,7 @@ class MyGame
 
   def create_user
     @interface.enter_name
-    @user = User.new(@name)
+    @user = User.new(@name, @hand)
   end
 
   def continue

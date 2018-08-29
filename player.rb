@@ -1,9 +1,10 @@
 class Player
-  attr_reader :name, :cards
+  attr_reader :name, :cards, :hand
   attr_accessor :cash, :sum
 
-  def initialize(name)
+  def initialize(name, hand)
     @name = name
+    @hand = hand
     @cash = 100
     @cards = []
     @sum = 0

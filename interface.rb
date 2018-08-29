@@ -13,6 +13,14 @@ class Interface
     puts 'Draw'
   end
 
+  def dealer_points_message(player)
+    puts "Dealer points: #{player.sum}"
+  end
+
+  def user_points_message(player)
+    puts "Your points: #{player.sum}"
+  end
+
   def message_to_continue
     puts 'Do you want to continue? y/n'
     @choice = gets.chomp

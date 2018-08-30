@@ -2,9 +2,9 @@ class Player
   attr_reader :name, :cards, :hand
   attr_accessor :cash, :sum
 
-  def initialize(name, hand)
+  def initialize(name)
     @name = name
-    @hand = hand
+    @hand = Hand.new
     @cash = 100
     @cards = []
     @sum = 0

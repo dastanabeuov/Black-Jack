@@ -51,4 +51,19 @@ class Interface
     puts 'Enter name: '
     @name = gets.chomp
   end
+
+  def dealer_cards_message(dealer)
+    puts 'Dealer cards:'
+    dealer.cards.each do |card|
+      puts "#{card.face}#{card.suit}"
+    end
+  end
+
+  def user_cards_message(user)
+    puts 'Your cards:'
+    user.cards.each do |card|
+      puts "#{card.face}#{card.suit}"
+    end
+  end
+
 end

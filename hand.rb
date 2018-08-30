@@ -1,9 +1,5 @@
 class Hand
 
-  def full_hands?(dealer, user)
-    dealer.cards.count == 3 && user.cards.count == 3
-  end
-
   def points(player)
     player.sum = 0
     @aces = []
@@ -23,20 +19,6 @@ class Hand
 
   def check_aces
     @aces.each { @sum -= 10 if @sum > 21 }
-  end
-
-  def dealer_cards_message(dealer)
-    puts 'Dealer cards:'
-    dealer.cards.each do |card|
-      puts "#{card.face}#{card.suit}"
-    end
-  end
-
-  def user_cards_message(user)
-    puts 'Your cards:'
-    user.cards.each do |card|
-      puts "#{card.face}#{card.suit}"
-    end
   end
 
 end

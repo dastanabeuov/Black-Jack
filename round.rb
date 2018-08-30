@@ -3,8 +3,7 @@ class Round
   def initialize(user, interface)
     @user = user
     @interface = interface
-    @hand = Hand.new
-    @dealer = Dealer.new('Dealer', @hand)
+    @dealer = Dealer.new
     @deck_for_game = Deсk.new
     @bank = Bank.new
   end
@@ -29,7 +28,7 @@ class Round
   end
 
   def dealing
-    if @hand.full_hands?(@dealer, @user)
+    if full_hands?
       open_cards
     else
       @interface.user_chioce
@@ -50,6 +49,10 @@ class Round
     end
   end
 
+  def full_hands?
+    @dealer.cards.count == 3 && @user.cards.count == 3
+  end
+
   def dealer_turn
     @dealer.take_card(@deck_for_game) if can_add_card?
     dealing
@@ -60,13 +63,13 @@ class Round
   end
 
   def user_cards
-    @user.hand.user_cards_message(@user)
+    @interface.user_cards_message(@user)
     @user.hand.points(@user)
     @interface.user_points_message(@user)
   end
 
   def dealer_cards
-    @dealer.hand.dealer_cards_message(@dealer)
+    @interface.dealer_cards_message(@dealer)
     @dealer.hand.points(@dealer)
     @interface.dealer_points_message(@dealer)
   end

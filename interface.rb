@@ -54,14 +54,14 @@ class Interface
 
   def dealer_cards_message(dealer)
     puts 'Dealer cards:'
-    dealer.cards.each do |card|
+    dealer.hand.cards.each do |card|
       puts "#{card.face}#{card.suit}"
     end
   end
 
   def user_cards_message(user)
     puts 'Your cards:'
-    user.cards.each do |card|
+    user.hand.cards.each do |card|
       puts "#{card.face}#{card.suit}"
     end
   end

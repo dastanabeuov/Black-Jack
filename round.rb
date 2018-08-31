@@ -10,7 +10,7 @@ class Round
 
   def run
     @user.reset_points
-    @user.cards.clear
+    @user.hand.cards.clear
     @deck_for_game.create_deck
     @deck_for_game.cards.shuffle!
     cards_for_players
@@ -38,7 +38,7 @@ class Round
         dealer_turn
       when 2
         @user.take_card(@deck_for_game)
-        raise 'You can add only one card' if @user.cards.count > 3
+        raise 'You can add only one card' if @user.hand.cards.count > 3
         dealer_turn
       when 3
         open_cards
@@ -50,7 +50,7 @@ class Round
   end
 
   def full_hands?
-    @dealer.cards.count == 3 && @user.cards.count == 3
+    @dealer.hand.cards.count == 3 && @user.hand.cards.count == 3
   end
 
   def dealer_turn
@@ -59,7 +59,7 @@ class Round
   end
 
   def can_add_card?
-    @dealer.sum < 17 && @dealer.cards.count != 3
+    @dealer.sum < 17 && @dealer.hand.cards.count != 3
   end
 
   def user_cards

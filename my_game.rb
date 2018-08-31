@@ -6,7 +6,8 @@ class MyGame
   end
 
   def run
-    create_user
+    @interface.enter_name
+    @user = Player.new(@name)
     new_round
     loop do
       continue
@@ -15,9 +16,13 @@ class MyGame
 
   private
 
-  def create_user
-    @interface.enter_name
-    @user = User.new(@name)
+  def new_round
+    if @user.cash.zero?
+      puts 'Insufficient funds'
+      exit
+    else
+      Round.new(@user, @interface).run
+    end
   end
 
   def continue
@@ -32,12 +37,4 @@ class MyGame
     end
   end
 
-  def new_round
-    if @user.cash.zero?
-      puts 'Insufficient funds'
-      exit
-    else
-      Round.new(@user, @interface).run
-    end
-  end
 end

@@ -43,7 +43,7 @@ class Round
       when 3
         open_cards
       else
-        puts 'Choice is wrong. Try again'
+        @interface.wrong_try_again
         exit
       end
     end

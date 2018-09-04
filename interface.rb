@@ -13,6 +13,12 @@ class Interface
     puts 'Draw'
   end
 
+  def insufficient
+    puts 'Insufficient funds'
+  end
+  def wrong_try_again
+    puts 'Choice is wrong. Try again'
+  end
   def dealer_points_message(player)
     puts "Dealer points: #{player.sum}"
   end

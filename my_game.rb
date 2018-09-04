@@ -18,7 +18,7 @@ class MyGame
 
   def new_round
     if @user.cash.zero?
-      puts 'Insufficient funds'
+      @interface.insufficient
       exit
     else
       Round.new(@user, @interface).run

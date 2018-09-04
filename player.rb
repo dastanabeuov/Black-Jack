@@ -1,12 +1,11 @@
 class Player
   attr_reader :name, :hand
-  attr_accessor :cash, :sum
+  attr_accessor :cash
 
   def initialize(name)
     @name = name
     @hand = Hand.new
     @cash = 100
-    @sum = 0
   end
 
   def take_card(deck)
@@ -14,7 +13,7 @@ class Player
   end
 
   def reset_points
-    @sum = 0
+    @hand.sum = 0
   end
 
   def take_money(cash)

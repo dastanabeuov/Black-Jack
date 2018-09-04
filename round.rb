@@ -59,18 +59,18 @@ class Round
   end
 
   def can_add_card?
-    @dealer.sum < 17 && @dealer.hand.cards.count != 3
+    @dealer.hand.sum < 17 && @dealer.hand.cards.count != 3
   end
 
   def user_cards
     @interface.user_cards_message(@user)
-    @user.hand.points(@user)
+    @user.hand.points
     @interface.user_points_message(@user)
   end
 
   def dealer_cards
     @interface.dealer_cards_message(@dealer)
-    @dealer.hand.points(@dealer)
+    @dealer.hand.points
     @interface.dealer_points_message(@dealer)
   end
 
@@ -88,9 +88,9 @@ class Round
   end
 
   def verify
-    if @user.sum > 21 || @user.sum < @dealer.sum && @dealer.sum <= 21
+    if @user.hand.sum > 21 || @user.hand.sum < @dealer.hand.sum && @dealer.hand.sum <= 21
       lose
-    elsif @user.sum > @dealer.sum || @dealer.sum > 21
+    elsif @user.hand.sum > @dealer.hand.sum || @dealer.hand.sum > 21
       win
     else
       draw

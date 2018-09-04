@@ -20,11 +20,11 @@ class Interface
     puts 'Choice is wrong. Try again'
   end
   def dealer_points_message(player)
-    puts "Dealer points: #{player.sum}"
+    puts "Dealer points: #{player.hand.sum}"
   end
 
   def user_points_message(player)
-    puts "Your points: #{player.sum}"
+    puts "Your points: #{player.hand.sum}"
   end
 
   def message_to_continue

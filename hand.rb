@@ -1,6 +1,5 @@
 class Hand
-  attr_reader :cards
-  attr_accessor :sum
+  attr_reader :cards, :sum
 
   def initialize
     @cards = []
@@ -26,6 +25,10 @@ class Hand
 
   def check_aces
     @aces.each { @sum -= 10 if @sum > 21 }
+  end
+
+  def reset
+    @sum = 0
   end
 
 end

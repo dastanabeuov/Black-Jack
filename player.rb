@@ -1,6 +1,5 @@
 class Player
-  attr_reader :name, :hand
-  attr_accessor :cash
+  attr_reader :name, :hand, :cash
 
   def initialize(name)
     @name = name
@@ -13,7 +12,7 @@ class Player
   end
 
   def reset_points
-    @hand.sum = 0
+    @hand.reset
   end
 
   def take_money(cash)
